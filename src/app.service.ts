@@ -1,18 +1,21 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateExchangeDto } from './dto/create-exchange.dto';
 import { Exchange } from './entities/exchange.entity';
 
 @Injectable()
 export class AppService {
-  private readonly exchanges: Exchange[] = [];
+  constructor(
+    @InjectRepository(Exchange)
+    private appRepository: Repository<Exchange>,
+  ) {}
 
-  create(createExchangeDto: CreateExchangeDto) {
-    const exchange = new Exchange(createExchangeDto);
-
-    this.exchanges.push(exchange);
+  async create(createExchangeDto: CreateExchangeDto) {
+    await this.appRepository.save(createExchangeDto);
   }
 
-  findAll() {
-    return this.exchanges;
+  async findAll() {
+    return this.appRepository.find();
   }
 }

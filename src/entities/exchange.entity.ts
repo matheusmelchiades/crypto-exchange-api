@@ -1,22 +1,26 @@
 import { ExchangeType, IExchange } from '../interfaces/exchange.interface';
-import { v4 as uuidV4 } from 'uuid';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
+@Entity()
 export class Exchange implements IExchange {
+  @PrimaryGeneratedColumn('uuid')
   id: string;
-  timestamp: Date;
-  currencyFrom: string;
-  amountFrom: number;
-  currencyTo: string;
-  amountTo: number;
-  type: ExchangeType;
 
-  constructor(params: Partial<IExchange> = {}) {
-    this.id = uuidV4();
-    this.timestamp = new Date();
-    this.currencyFrom = params.currencyFrom;
-    this.amountFrom = params.amountFrom;
-    this.currencyTo = params.currencyTo;
-    this.amountTo = params.amountTo;
-    this.type = params.type ?? 'exchanged';
-  }
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  timestamp: Date;
+
+  @Column()
+  currencyFrom: string;
+
+  @Column({ type: 'bigint' })
+  amountFrom: number;
+
+  @Column()
+  currencyTo: string;
+
+  @Column({ type: 'bigint' })
+  amountTo: number;
+
+  @Column({ default: 'default' })
+  type: ExchangeType;
 }

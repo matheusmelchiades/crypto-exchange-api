@@ -1,4 +1,4 @@
-export type ExchangeType = 'live_price' | 'exchanged';
+export type ExchangeType = 'live_price' | 'exchanged' | 'default';
 
 export interface IExchange {
   id: string;
