@@ -15,6 +15,10 @@ export class AppService {
     await this.appRepository.save(createExchangeDto);
   }
 
+  async createMany(createExchangeDtos: CreateExchangeDto[]) {
+    await this.appRepository.save(createExchangeDtos);
+  }
+
   async findAll() {
     return this.appRepository.find();
   }

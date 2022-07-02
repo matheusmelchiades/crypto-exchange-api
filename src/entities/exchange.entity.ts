@@ -12,13 +12,13 @@ export class Exchange implements IExchange {
   @Column()
   currencyFrom: string;
 
-  @Column({ type: 'bigint' })
+  @Column({ type: 'float' })
   amountFrom: number;
 
   @Column()
   currencyTo: string;
 
-  @Column({ type: 'bigint' })
+  @Column({ type: 'float' })
   amountTo: number;
 
   @Column({ default: 'default' })

@@ -8,7 +8,10 @@ export class AppController {
 
   @Post()
   create(@Body() createExchangeDto: CreateExchangeDto) {
-    return this.appService.create(createExchangeDto);
+    return this.appService.create({
+      ...createExchangeDto,
+      type: 'exchanged',
+    });
   }
 
   @Get()
