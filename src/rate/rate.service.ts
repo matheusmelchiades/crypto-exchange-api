@@ -2,10 +2,9 @@ import { HttpService } from '@nestjs/axios';
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Cron, CronExpression } from '@nestjs/schedule';
+import { AppGateway } from 'src/app.gateway';
 import { AppService } from 'src/app.service';
 import { CreateExchangeDto } from 'src/dto/create-exchange.dto';
-import { Exchange } from 'src/entities';
-import { RateGateway } from './rate.gateway';
 
 @Injectable()
 export class RateService {
@@ -15,7 +14,7 @@ export class RateService {
     private readonly appService: AppService,
     private readonly configService: ConfigService,
     private readonly httpService: HttpService,
-    private readonly rateGateway: RateGateway,
+    private readonly appGateway: AppGateway,
   ) {}
 
   async getRatesByCurrency(
@@ -74,11 +73,11 @@ export class RateService {
 
     this.logger.debug('Get all rates');
 
-    const ratesSaved = await this.appService.createMany(rates);
+    await this.appService.createMany(rates);
 
     this.logger.debug('Save all rates');
 
-    this.rateGateway.sendRates(ratesSaved);
+    this.appGateway.hasUpdate();
 
     this.logger.debug('Report rates');
 
