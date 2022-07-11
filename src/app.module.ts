@@ -7,7 +7,7 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { RateService } from './rate/rate.service';
-import { RateGateway } from './rate/rate.gateway';
+import { AppGateway } from './app.gateway';
 
 import * as Entities from './entities';
 
@@ -33,6 +33,6 @@ import * as Entities from './entities';
     }),
   ],
   controllers: [AppController],
-  providers: [AppService, RateService, RateGateway],
+  providers: [AppService, RateService, AppGateway],
 })
 export class AppModule {}

@@ -19,7 +19,16 @@ export class AppService {
     return this.appRepository.save(createExchangeDtos);
   }
 
-  async findAll() {
-    return this.appRepository.find();
+  async findAll(params: Partial<{ offset: number; page: number }>) {
+    const { offset = 10, page = 1 } = params;
+    const skip = offset * page - offset;
+
+    return this.appRepository.find({
+      take: offset,
+      skip,
+      order: {
+        timestamp: 'DESC',
+      },
+    });
   }
 }
